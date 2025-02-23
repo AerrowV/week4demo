@@ -45,8 +45,9 @@ public class ActivityDAO {
         EntityManager em = emf.createEntityManager();
         try {
             return em.createQuery("SELECT a FROM Activity a JOIN FETCH a.city", Activity.class).getResultList();
-        } finally {
-            em.close();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Error finding activities: " + e.getMessage());
         }
     }
 

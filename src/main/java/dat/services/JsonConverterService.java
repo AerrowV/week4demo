@@ -1,7 +1,8 @@
 package dat.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dat.dto.ActivityDTO;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import dat.entities.Activity;
 
 import java.util.List;
 
@@ -9,8 +10,9 @@ public class JsonConverterService {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static String convertToJson(List<ActivityDTO> activities) {
+    public static String convertToJson(List<Activity> activities) {
         try {
+            objectMapper.registerModule(new JavaTimeModule());
             return objectMapper.writeValueAsString(activities);
         } catch (Exception e) {
             e.printStackTrace();

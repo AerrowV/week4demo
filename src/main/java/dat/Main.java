@@ -10,6 +10,7 @@ import dat.entities.CityInfo;
 import dat.entities.WeatherInfo;
 import dat.services.ActivityService;
 import dat.services.CityAndWeatherService;
+import dat.services.JsonConverterService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -25,6 +26,7 @@ public class Main {
 
         CityAndWeatherService cityAndWeatherService = new CityAndWeatherService();
         ActivityService activityService = new ActivityService(cityAndWeatherService, ACTIVITY_DAO);
+        JsonConverterService jsonConverterService = new JsonConverterService();
 
         String weatherAPI = System.getenv("API_KEY_WEATHER");
         String cityAPI = System.getenv("API_KEY_CITY");
@@ -87,5 +89,9 @@ public class Main {
 
         System.out.println("All activities:");
         ACTIVITY_DAO.findAll().forEach(System.out::println);
+
+        String json = JsonConverterService.convertToJson(ACTIVITY_DAO.findAll());
+        System.out.println(json);
+
     }
 }

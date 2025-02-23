@@ -1,5 +1,6 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,10 +9,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "activities")
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Activity {
 
     @Id
@@ -27,6 +29,7 @@ public class Activity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")
+    @JsonIgnore
     private CityInfo city;
 
     @OneToOne(cascade = CascadeType.ALL)
